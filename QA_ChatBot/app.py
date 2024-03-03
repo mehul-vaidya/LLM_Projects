@@ -1,5 +1,5 @@
 #conda create -p venv python==3.9
-#conda activate D:\KrishNaik_LangChain\venv
+#conda activate [venv]
 #pip install -r requirements.txt
 #need below libraby for running jupyter notebook
 #pip install ipykernel 
