@@ -1,0 +1,4 @@
+ChatBot_usingPDF_cmd/venv/
+ChatBot_usingPDF/venv/
+QA_ChatBot/venv/
+*.env
