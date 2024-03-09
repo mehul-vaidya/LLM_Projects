@@ -1,0 +1,1 @@
+In this project we have used open ai dall-e-2 to generate image from text
