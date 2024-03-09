@@ -25,7 +25,7 @@ from dotenv import load_dotenv
 load_dotenv()  # take environment variables from .env.
 #------------------------------------------------------------------------------------------------------------------
 st.title('Best restaurant Park Search')
-input_text=st.text_input("Entry Country Name")
+input_text=st.text_input("Enter Country Name")
 #------------------------------------------------------------------------------------------------------------------
 
 state_prompt=PromptTemplate(
@@ -63,7 +63,7 @@ chain4=LLMChain(llm=llm,prompt=park_name_prompt,output_key='park',memory=park_me
 parent_chain=SequentialChain(chains=[chain1,chain2,chain3,chain4],input_variables=['country'],output_variables=['state','city','restaurant','park'],verbose=False)
 
 if input_text:
-    st.write(parent_chain({'country':input_text}))
+    parent_chain({'country':input_text})
 
     with st.expander('Best state'): 
         st.info(state_memory.buffer)

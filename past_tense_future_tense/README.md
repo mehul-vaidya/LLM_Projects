@@ -1,0 +1,1 @@
+given input word , we will find its past tense and future tense

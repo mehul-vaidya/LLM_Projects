@@ -20,6 +20,7 @@ from langchain_community.vectorstores.cassandra  import Cassandra
 from langchain.indexes.vectorstore import VectorStoreIndexWrapper
 from langchain_openai import OpenAI
 from langchain_openai import OpenAIEmbeddings
+from langchain_core.messages import HumanMessage , AIMessage
 import sys, os
 import streamlit as st
 from dotenv import load_dotenv
@@ -28,16 +29,12 @@ load_dotenv()  # take environment variables from .env.
 
 #******************************************************************************************************
 #streamlit used to create UI
-st.set_page_config(page_title="Citi Rewards")
-st.title("Citi Rewards Credit Card Q&A Bot")
 # Initialize chat history
-if "messages" not in st.session_state:
-    st.session_state.messages = []
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
 
-# Display chat messages from history on app rerun
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+st.set_page_config(page_title="Citi Rewards")
+st.title("Citi Rewards Credit Card Q&A Bot")    
 
 #******************************************************************************************************
 #to read PDF
@@ -83,11 +80,34 @@ astra_vector_store = Cassandra(
 
 #store the data into vector db
 #astra_vector_store.add_texts(texts[:50])
-astra_vector_store.add_texts(texts[:10])#***************** side reduced to reduce rate limit error on DB
+astra_vector_store.add_texts(texts[:30])#***************** side reduced to reduce rate limit error on DB
 astra_vector_index=VectorStoreIndexWrapper(vectorstore=astra_vector_store)
 #******************************************************************************************************
-#ask questions
+#conversation
+for message in st.session_state.chat_history:
+    if isinstance(message, HumanMessage):
+        with st.chat_message("Human"):
+            st.markdown(message.content)
+    else:
+        with st.chat_message("AI"):
+            st.markdown(message.content)        
 
+
+#ask questions
+user_query = st.chat_input("Your message")
+if user_query is not None and user_query != "":
+    st.session_state.chat_history.append(HumanMessage(user_query))
+
+    with st.chat_message("Human"):
+        st.markdown(user_query)
+
+    with st.chat_message("AI"):
+        ai_response =astra_vector_index.query(user_query,llm=llm).strip()   #get answer fromm LLM   
+        st.markdown(ai_response)   
+
+    st.session_state.chat_history.append(AIMessage(ai_response)) 
+
+_="""
 if prompt := st.chat_input("Type question. Type q to quit"):
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -98,9 +118,17 @@ if prompt := st.chat_input("Type question. Type q to quit"):
     # Display assistant response in chat message container
     answer=astra_vector_index.query(prompt,llm=llm).strip()   #get answer fromm LLM  
     with st.chat_message("assistant"):
-        response = st.write(answer)
+        #response = st.write(answer)
+        stream = llm.chat.completions.create(
+            model=st.session_state["openai_model"],
+            messages=[
+                {"role": m["role"], "content": m["content"]}
+                for m in st.session_state.messages
+            ],
+            stream=True,
+        )
     # Add assistant response to chat history
     st.session_state.messages.append({"role": "assistant", "content": response})
 
-
+"""
 #******************************************************************************************************
