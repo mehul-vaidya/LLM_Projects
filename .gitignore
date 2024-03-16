@@ -2,12 +2,17 @@ Best_Restaurant_Park_Search/venv/
 
 QA_ChatBot/venv/
 QA_ChatBot_remember_History/venv/
+
 ChatBot_usingPDF/venv/
 ChatBot_usingPDF_cmd/venv/
 ChatBot_usingPDF_FAISS_vectorStore/venv/
 
-Image_Generation/venv/
+
 Past_tense_future_tense/venv/
+Blog_generation_LLAMA_2/venv/
+Blog_generation_LLAMA_2/models/
+
+Image_Generation/venv/
 Voice_Generation/venv/
 
 */venv/

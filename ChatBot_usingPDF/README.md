@@ -14,6 +14,5 @@ please create OPEN_API_KEY , AstraDB_TOEKN , AstraDB_ID and store it in .env fil
 #pip install -r requirements.txt
 #python app.py
 
-This code take input from command line and produce output on command lime.
-There is another code present in another repo , in which we have created UI using streamlit.
+This code take input from  UI created using streamlit.
 
