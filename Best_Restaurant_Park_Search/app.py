@@ -65,10 +65,10 @@ parent_chain=SequentialChain(chains=[chain1,chain2,chain3,chain4],input_variable
 if input_text:
     parent_chain({'country':input_text})
 
-    with st.expander('Best state'): 
+    with st.expander('One of state in this country is '): 
         st.info(state_memory.buffer)
 
-    with st.expander('Best city'): 
+    with st.expander('One of city in this country is'): 
         st.info(city_memory.buffer)
 
     with st.expander('Best restaurant'): 
