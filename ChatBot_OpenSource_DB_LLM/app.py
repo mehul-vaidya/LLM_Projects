@@ -62,7 +62,8 @@ text_spliter=CharacterTextSplitter(
     chunk_overlap=200,
     length_function=len
 )
-texts=text_spliter.split_text(raw_text)        
+texts=text_spliter.split_text(raw_text)  
+texts=text_spliter.create_documents(texts)      
 
 #******************************************************************************************************
 #initialize connection with db

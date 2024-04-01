@@ -1,0 +1,10 @@
+langchain_community
+langchain
+typing
+streamlit
+pypdf
+python-dotenv
+openai
+chromadb==0.4.15
+langchain_openai
+streamlit

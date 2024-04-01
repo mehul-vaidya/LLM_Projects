@@ -1,1 +1,0 @@
-https://github.com/bhattbhavesh91/pdf-q-a-llamaindex-llama2/tree/main
