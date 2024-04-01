@@ -1,2 +1,2 @@
-# Chat-With-Your-Data-Chatbot
-Chat with Your Data Chatbot using Langchain, ChromaDB, Sentence Transformers, and LaMiNi LM Model. This Chatbot is completely powered by Open Source Models. No OpenAI key is required.
+Install this if you are facing issue wheel build error
+https://stackoverflow.com/questions/73969269/error-could-not-build-wheels-for-hnswlib-which-is-required-to-install-pyprojec
