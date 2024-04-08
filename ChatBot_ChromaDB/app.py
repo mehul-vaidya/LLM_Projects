@@ -63,7 +63,7 @@ class Genie:
 #******************************************************************************************************
 
 if __name__ == "__main__":
-    pdf_loader.load_pdf("docs/TM6.pdf")
+    pdf_loader.load_pdf("docs/Terms-and-Conditions.pdf")
     genie = Genie("result.txt")
     #print(genie.ask("What data is sent to the company? Can I get my money back as I don't like the service"))
 
