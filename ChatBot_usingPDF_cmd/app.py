@@ -70,7 +70,7 @@ astra_vector_store = Cassandra(
 #*****************************************************************************************************
 #store the data into vector db
 #astra_vector_store.add_texts(texts[:50])
-astra_vector_store.add_texts(texts) #you can limit this to avoid rate limit error on DB
+astra_vector_store.add_texts(texts[:50]) #you can limit this to avoid rate limit error on DB
 astra_vector_index=VectorStoreIndexWrapper(vectorstore=astra_vector_store)
 #******************************************************************************************************
 #ask questions

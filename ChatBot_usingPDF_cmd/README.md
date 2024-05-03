@@ -12,7 +12,7 @@ please create OPEN_API_KEY , AstraDB_TOEKN , AstraDB_ID and store it in .env fil
 #conda create -p venv python==3.9
 #conda activate [env name]
 #pip install -r requirements.txt
-#streamlit run app.py
+#python app.py
 
 This code take input and produce output on command line.
 

@@ -47,7 +47,7 @@ class Genie:
 
     @staticmethod
     def text_split(documents: TextLoader):
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
         texts = text_splitter.split_documents(documents)
         return texts
 

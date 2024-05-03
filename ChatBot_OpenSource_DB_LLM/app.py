@@ -16,21 +16,19 @@ perform operation like search etc using those vectors
 we use casendra db as db, which is hosted on https://astra.datastax.com/
 '''
 #******************************************************************************************************
-from langchain_community.vectorstores.cassandra  import Cassandra
-from langchain_community.vectorstores import FAISS
-from langchain.vectorstores import Chroma
-from langchain.indexes.vectorstore import VectorStoreIndexWrapper
-from langchain.chains import VectorDBQA
-from langchain_openai import OpenAI
+
+from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
+from langchain_community.llms import OpenAI
 from langchain_core.messages import HumanMessage , AIMessage
-from langchain.chains.question_answering import load_qa_chain
-import sys, os
-import tiktoken
+from langchain.chains import RetrievalQA
+import os
+from langchain_openai import ChatOpenAI
 import streamlit as st
 from dotenv import load_dotenv
-import cassio
 load_dotenv()  # take environment variables from .env.
+persist_directory = "db"
+
 from langchain_community.llms import CTransformers
 
 #******************************************************************************************************
@@ -72,23 +70,23 @@ texts=text_spliter.create_documents(texts)
 #cassio.init(token=os.environ["AstraDB_TOEKN"],database_id=os.environ["AstraDB_ID"])
 
 #create model
-llm=OpenAI(openai_api_key=os.environ["OPEN_API_KEY"])
-'''
+
+_="""
 llm=CTransformers(model='models/llama-2-7b-chat.ggmlv3.q8_0.bin', model_type='llama',
                       config={'max_new_tokens':600,'temperature':0.01 , 'context_length': 1000})
-'''
+"""
 embedding=OpenAIEmbeddings(openai_api_key=os.environ["OPEN_API_KEY"])
-vectordb = Chroma.from_documents(texts, embedding)
+vectordb = Chroma.from_documents(texts, embedding,persist_directory=persist_directory)
+vectordb.persist()
 
 #use FAISS to store those embedding 
 #document_search = FAISS.from_texts(texts, embedding)
 #chain = load_qa_chain(llm, chain_type="stuff")
-qa = VectorDBQA.from_chain_type(llm, chain_type="stuff", vectorstore=vectordb)
-
-
 
 def getAnswer(query):
-    qa.run(query)
+    qa = RetrievalQA.from_chain_type(llm=ChatOpenAI(openai_api_key=os.environ["OPEN_API_KEY"],model_name="gpt-3.5-turbo"), chain_type="stuff", retriever=vectordb.as_retriever())
+    print("############" +query)
+    qa.invoke(query).get('result')
     #docs = document_search.similarity_search(query)
     #return chain.run(input_documents=docs, question=query)
 
@@ -128,6 +126,7 @@ if user_query is not None and user_query != "":
 
     with st.chat_message("AI"):
         ai_response = getAnswer(user_query)   
+        print("**************" + ai_response)
         st.markdown(ai_response)   
 
     st.session_state.chat_history.append(AIMessage(ai_response)) 
@@ -157,3 +156,4 @@ if prompt := st.chat_input("Type question. Type q to quit"):
 
 """
 #******************************************************************************************************
+

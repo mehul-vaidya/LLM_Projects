@@ -1,7 +1,6 @@
-This repo contains serveral small projects implemented using langchain , streamlet. 
-such as chat bot , best restaurant & park finder , past and future tense of word app.
+This repo contains serveral small projects implemented using langchain , streamlit. 
+such as chatbot , best restaurant & park finder , past and future tense of word app.
 Refer readme in individual project
-
 
 QA_ChatBot -> chatbot with direct query to LLM
 QA_ChatBot_remember_History -> chatbot with direct query to LLM, but it remembers previous chat history
@@ -18,6 +17,9 @@ Voice_Generation-> text to voice generator using openAI api
 Image_Generation-> text to Image generator using openAI api
 Handwritten_Text_Extractor -> extract text from multi language invoice
 
+ChatBot_ChromaDB -> we have used Chroma DB running on local machine to store vector embeddings
+ChatBot_OpenSource_DB_LLM -> same as above but much simplified code
 
 https://www.reddit.com/r/ChatGPTCoding/comments/14112ol/open_source_vector_databases/
+
 

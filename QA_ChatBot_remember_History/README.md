@@ -8,3 +8,4 @@ This is simple chat application using GPT 3.5 LLM.
 if you run it on local then,
 create .env file cobtaining OPEN_API_KEY
 install required packages specified in requirements.txt
+then run the code by command "streamlit run app.py"
